@@ -1,0 +1,119 @@
+/* Layout and page background */
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  background: #555; /* page outer background */
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+  position: relative;
+  width: min(1100px, calc(100vw - 56px));
+  height: min(80vh, 640px);
+  margin: 28px auto;
+
+  padding: 24px;
+  border-radius: clamp(18px, 3vw, 50px);
+  box-sizing: border-box;
+
+  background: #3b4f94; /* outer card color */
+  border: 4px solid rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.12) inset;
+  overflow: visible;
+}
+
+/* inner panels created with pseudo elements
+   - ::after is the light-blue right panel
+   - ::before is the white left panel sitting above it */
+/*inner blue panel behind the white panel, so it has a lower z-index */
+main::after {
+  content: "";
+  position: absolute;
+  top: 2.5%;
+  bottom: 2.5%;
+
+  width: 95%; /* the width of the light blue ontop of the dark blue */
+  left: 2.5%;
+  right: 8.5%;
+  background: #9bb9e9; /* inner right light blue */
+  border-radius: calc(12px + 1.2vw);
+  z-index: 0;
+}
+
+main::before {
+  content: "";
+  position: absolute;
+  top: 2.5%;
+  bottom: 2.5%;
+  left: 2.5%;
+  width: 30%;
+  background: #ffffff; /* left white panel */
+  border-radius: calc(12px + 1.2vw);
+  z-index: 1;
+}
+
+/* Make the heading and search sit above the decorative panels */
+main > h1 {
+  margin: 0 0 12px 0;
+  font-size: 20px;
+  color: #000000;
+  position: relative;
+  z-index: 2;
+}
+
+#search-container {
+  position: relative;
+  z-index: 2; /* above pseudo panels */
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 200px;
+  background: #efefef;
+  padding: 12px 12px;
+  border-radius: 999px;
+  /*box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);*/
+  margin-top: 18px;
+}
+
+#search-container img {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+#search-container input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+  color: #222;
+  width: 100%;
+}
+
+/* Small responsive tweak */
+@media (max-width: 640px) {
+  main {
+    height: 62vh;
+    padding: 18px;
+  }
+  #search-container {
+    width: 200px;
+  }
+  main::before {
+    width: 34%;
+  }
+  main::after {
+    left: calc(2.5% + 34%);
+  }
+}
