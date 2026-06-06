@@ -7,12 +7,169 @@
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
-    <main>
-      <div id="search-container">
-        <img src="icons/search icon.png" alt="Search icon" />
-        <input type="text" id="location" placeholder="Search for places" />
+    <div class="app-shell">
+      <div class="left-panel">
+        <div class="search-row">
+          <input
+            type="text"
+            placeholder="Search for places"
+            spellcheck="false"
+          />
+          <button>
+            <img
+              class="search-icon"
+              src="icons/search icon.png"
+              width="20"
+              height="20"
+              alt="Search icon"
+            />
+          </button>
+        </div>
+
+        <div class="location-line">
+          <span class="location-pin">📍</span>
+          <div class="location-text">Johannesburg,<br />South Africa</div>
+        </div>
+
+        <div class="weather-center">
+          <img
+            class="weather-icon"
+            src="icons/partly cloudy.png"
+            alt="Weather icon"
+          />
+          <div class="temperature">12°C</div>
+          <div class="weather-summary">Mostly cloudy</div>
+          <div class="weather-meta">
+            <span>Monday</span>
+            <span>14:00</span>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="summary-list">
+          <div class="summary-item">
+            <span>Rain</span>
+            <strong>30%</strong>
+          </div>
+          <div class="summary-item">
+            <span>Wind</span>
+            <strong>10 km/h</strong>
+          </div>
+          <div class="summary-item">
+            <span>Humidity</span>
+            <strong>78%</strong>
+          </div>
+        </div>
+
+        <div class="advice-card">
+          <div class="advice-title">Weather Advice</div>
+          <div class="advice-text">
+            Best to stay indoors today. Carry an umbrella if you need to go out.
+          </div>
+          <div class="advice-text">Wear a light jacket and closed shoes.</div>
+        </div>
       </div>
-    </main>
+
+      <div class="right-panel">
+        <div class="top-bar">
+          <div class="tab-row">
+            <span class="tab active">Today</span>
+            <span class="tab">Week</span>
+          </div>
+          <div class="unit-buttons">
+            <button class="unit active">°C</button>
+            <button class="unit">°F</button>
+          </div>
+        </div>
+
+        <div class="forecast-row">
+          <div class="forecast-card1">
+            <div>Sun</div>
+            <div class="forecast-icon">☀️</div>
+            <div class="forecast-temp">21°C</div>
+            <div class="forecast-low">9°C</div>
+          </div>
+          <div class="forecast-card2">
+            <div>Mon</div>
+            <div class="forecast-icon">☁️</div>
+            <div class="forecast-temp">21°C</div>
+            <div class="forecast-low">9°C</div>
+          </div>
+          <div class="forecast-card3">
+            <div>Tue</div>
+            <div class="forecast-icon">🌧️</div>
+            <div class="forecast-temp">21°C</div>
+            <div class="forecast-low">9°C</div>
+          </div>
+          <div class="forecast-card">
+            <div>Wed</div>
+            <div class="forecast-icon4">⛅</div>
+            <div class="forecast-temp">21°C</div>
+            <div class="forecast-low">9°C</div>
+          </div>
+          <div class="forecast-card5">
+            <div>Thu</div>
+            <div class="forecast-icon">☁️</div>
+            <div class="forecast-temp">21°C</div>
+            <div class="forecast-low">9°C</div>
+          </div>
+          <div class="forecast-card6">
+            <div>Fri</div>
+            <div class="forecast-icon">🌧️</div>
+            <div class="forecast-temp">21°C</div>
+            <div class="forecast-low">9°C</div>
+          </div>
+          <div class="forecast-card7">
+            <div>Sat</div>
+            <div class="forecast-icon">☀️</div>
+            <div class="forecast-temp">21°C</div>
+            <div class="forecast-low">9°C</div>
+          </div>
+        </div>
+
+        <div class="section-heading">Today’s highlights</div>
+
+        <div class="highlights-grid">
+          <div class="highlight-card">
+            <div class="highlight-icon">💧</div>
+            <div class="highlight-title">Humidity</div>
+            <div class="highlight-value">78%</div>
+            <div class="highlight-subtitle">High</div>
+          </div>
+          <div class="highlight-card">
+            <div class="highlight-icon">💨</div>
+            <div class="highlight-title">Wind Speed</div>
+            <div class="highlight-value">10 km/h</div>
+            <div class="highlight-subtitle">Moderate</div>
+          </div>
+          <div class="highlight-card">
+            <div class="highlight-icon">☀️</div>
+            <div class="highlight-title">UV Index</div>
+            <div class="highlight-value">3</div>
+            <div class="highlight-subtitle">Moderate</div>
+          </div>
+          <div class="highlight-card">
+            <div class="highlight-icon">👁️</div>
+            <div class="highlight-title">Visibility</div>
+            <div class="highlight-value">30 km</div>
+            <div class="highlight-subtitle">Good</div>
+          </div>
+          <div class="highlight-card">
+            <div class="highlight-icon">🌅</div>
+            <div class="highlight-title">Sunrise</div>
+            <div class="highlight-value">06:52</div>
+            <div class="highlight-subtitle">Sunset 17:18</div>
+          </div>
+          <div class="highlight-card">
+            <div class="highlight-icon">⏱️</div>
+            <div class="highlight-title">Pressure</div>
+            <div class="highlight-value">1016 hPa</div>
+            <div class="highlight-subtitle">Normal</div>
+          </div>
+        </div>
+      </div>
+    </div>
     <script src="main.js"></script>
   </body>
 </html>
