@@ -70,10 +70,15 @@
 
         <div class="advice-card">
           <div class="advice-title">Weather Advice</div>
-          <div class="advice-text">
-            Best to stay indoors today. Carry an umbrella if you need to go out.
+          <div id="adv-wear-txt" class="advice-text">
+            Wear a warm jacket and long pants.
           </div>
-          <div class="advice-text">Wear a light jacket and closed shoes.</div>
+          <div id="adv-safety-txt" class="advice-text">
+            Cold weather. Keep warm and stay dry.
+          </div>
+          <div id="adv-activity-txt" class="advice-text">
+            Good day for indoor activities.
+          </div>
         </div>
       </div>
 
@@ -110,7 +115,7 @@
           </div>
           <div class="forecast-card">
             <div>Wed</div>
-            <div class="forecast-icon4">⛅</div>
+            <div class="forecast-icon">⛅</div>
             <div class="forecast-temp">21°C</div>
             <div class="forecast-low">9°C</div>
           </div>
@@ -140,38 +145,40 @@
           <div class="highlight-card">
             <div class="highlight-icon">💧</div>
             <div class="highlight-title">Humidity</div>
-            <div class="highlight-value">78%</div>
-            <div class="highlight-subtitle">High</div>
+            <div class="highlight-value" id="humidity-value">78%</div>
+            <div class="highlight-subtitle" id="humidity-subtitle">High</div>
           </div>
           <div class="highlight-card">
             <div class="highlight-icon">💨</div>
             <div class="highlight-title">Wind Speed</div>
-            <div class="highlight-value">10 km/h</div>
-            <div class="highlight-subtitle">Moderate</div>
+            <div class="highlight-value" id="wind-value">10 km/h</div>
+            <div class="highlight-subtitle" id="wind-subtitle">Moderate</div>
           </div>
           <div class="highlight-card">
             <div class="highlight-icon">☀️</div>
             <div class="highlight-title">UV Index</div>
-            <div class="highlight-value">3</div>
-            <div class="highlight-subtitle">Moderate</div>
+            <div class="highlight-value" id="uv-value">3</div>
+            <div class="highlight-subtitle" id="uv-subtitle">Moderate</div>
           </div>
           <div class="highlight-card">
             <div class="highlight-icon">👁️</div>
             <div class="highlight-title">Visibility</div>
-            <div class="highlight-value">30 km</div>
-            <div class="highlight-subtitle">Good</div>
+            <div class="highlight-value" id="visibility-value">30 km</div>
+            <div class="highlight-subtitle" id="visibility-subtitle">Good</div>
           </div>
           <div class="highlight-card">
             <div class="highlight-icon">🌅</div>
             <div class="highlight-title">Sunrise</div>
-            <div class="highlight-value">06:52</div>
-            <div class="highlight-subtitle">Sunset 17:18</div>
+            <div class="highlight-value" id="sunrise-value">--:--</div>
+            <div class="highlight-subtitle">
+              Sunset <span id="sunset-value">--:--</span>
+            </div>
           </div>
           <div class="highlight-card">
             <div class="highlight-icon">⏱️</div>
             <div class="highlight-title">Pressure</div>
-            <div class="highlight-value">1016 hPa</div>
-            <div class="highlight-subtitle">Normal</div>
+            <div class="highlight-value" id="pressure-value">1016 hPa</div>
+            <div class="highlight-subtitle" id="pressure-subtitle">Normal</div>
           </div>
         </div>
       </div>

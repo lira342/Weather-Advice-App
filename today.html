@@ -70,10 +70,15 @@
 
         <div class="advice-card">
           <div class="advice-title">Weather Advice</div>
-          <div class="advice-text">
-            Best to stay indoors today. Carry an umbrella if you need to go out.
+          <div id="adv-wear-txt" class="advice-text">
+            Wear a warm jacket and long pants.
           </div>
-          <div class="advice-text">Wear a light jacket and closed shoes.</div>
+          <div id="adv-safety-txt" class="advice-text">
+            Cold weather. Keep warm and stay dry.
+          </div>
+          <div id="adv-activity-txt" class="advice-text">
+            Good day for indoor activities.
+          </div>
         </div>
       </div>
 
@@ -110,7 +115,7 @@
           </div>
           <div class="forecast-card">
             <div>Wed</div>
-            <div class="forecast-icon4">⛅</div>
+            <div class="forecast-icon">⛅</div>
             <div class="forecast-temp">21°C</div>
             <div class="forecast-low">9°C</div>
           </div>
@@ -138,9 +143,11 @@
           <h3>Today's weather</h3>
           <div class="todays-weather-container">
             <div class="weather-display">
-              <div class="weather-icon-large">☀️🌧️</div>
-              <div class="weather-temp-large">12°C</div>
-              <div class="feels-like">Feels like 15°C</div>
+              <div class="weather-icon-large">☀️</div>
+              <div class="weather-data">
+                <div class="weather-temp-large">12°C</div>
+                <div class="feels-like">Feels like 15°C</div>
+              </div>
             </div>
             <div class="weather-info-grid">
               <div class="info-box">
@@ -154,21 +161,40 @@
                 <div class="info-icon">💧</div>
                 <div class="info-content">
                   <div class="info-label">Humidity</div>
-                  <div class="info-value">78%</div>
+                  <div class="info-value" id="humidity-value">78%</div>
+                  <div class="info-subtitle" id="humidity-subtitle">High</div>
                 </div>
               </div>
               <div class="info-box">
                 <div class="info-icon">💨</div>
                 <div class="info-content">
                   <div class="info-label">Wind</div>
-                  <div class="info-value">10 km/h</div>
+                  <div class="info-value" id="wind-value">10 km/h</div>
+                  <div class="info-subtitle" id="wind-subtitle">Moderate</div>
                 </div>
               </div>
               <div class="info-box">
                 <div class="info-icon">☀️</div>
                 <div class="info-content">
                   <div class="info-label">UV Index</div>
-                  <div class="info-value">3</div>
+                  <div class="info-value" id="uv-value">3</div>
+                  <div class="info-subtitle" id="uv-subtitle">Moderate</div>
+                </div>
+              </div>
+              <div class="info-box">
+                <div class="info-icon">👁️</div>
+                <div class="info-content">
+                  <div class="info-label">Visibility</div>
+                  <div class="info-value" id="visibility-value">30 km</div>
+                  <div class="info-subtitle" id="visibility-subtitle">Good</div>
+                </div>
+              </div>
+              <div class="info-box">
+                <div class="info-icon">⏱️</div>
+                <div class="info-content">
+                  <div class="info-label">Pressure</div>
+                  <div class="info-value" id="pressure-value">1016 hPa</div>
+                  <div class="info-subtitle" id="pressure-subtitle">Normal</div>
                 </div>
               </div>
             </div>
