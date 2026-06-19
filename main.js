@@ -63,7 +63,7 @@ async function loadLocationWeather() {
         });
       },
       async () => {
-        await getWeather("Johannesburg");
+        await getWeather("Auckland Park");
       },
     );
   } else {
@@ -94,9 +94,12 @@ async function getWeather(city, coords) {
     if (coords && coords.latitude != null && coords.longitude != null) {
       url = `https://api.openweathermap.org/data/2.5/weather?lat=${coords.latitude}&lon=${coords.longitude}&appid=${apiKey}&units=metric`;
     } else if (city) {
-      url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
-        city,
-      )}&appid=${apiKey}&units=metric`;
+      const location = await geocodeLocation(city);
+      if (!location) {
+        displayerror("Location not found. Please try another search.");
+        return;
+      }
+      url = `https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${apiKey}&units=metric`;
     } else {
       displayerror("Please enter a city name.");
       return;
@@ -112,6 +115,21 @@ async function getWeather(city, coords) {
   } finally {
     hideLoading();
   }
+}
+
+async function geocodeLocation(city) {
+  const url = `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(
+    city,
+  )}&limit=1&appid=${apiKey}`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  if (!Array.isArray(data) || data.length === 0) {
+    return null;
+  }
+
+  return data[0];
 }
 
 function displayWeatherinfo(data) {
@@ -136,6 +154,11 @@ function displayWeatherinfo(data) {
   const weatherTempLarge = document.querySelector(".weather-temp-large");
   if (weatherTempLarge) {
     weatherTempLarge.textContent = `${Math.round(data.main.temp)}°C`;
+  }
+
+  const weatherIconLarge = document.querySelector(".weather-icon-large");
+  if (weatherIconLarge) {
+    weatherIconLarge.textContent = getWeatherEmoji(data.weather[0].main);
   }
 
   const feelsLike = document.querySelector(".feels-like");
@@ -166,12 +189,18 @@ function displayWeatherinfo(data) {
     });
   }
 
-  const summaryValues = document.querySelectorAll(".summary-item strong");
+  const summaryValues = document.querySelectorAll(
+    ".summary-item .summary-value",
+  );
+
   if (summaryValues.length >= 3) {
     const rainAmount = data.rain ? data.rain["1h"] || data.rain["3h"] || 0 : 0;
+    const windSpeed = Math.round(data.wind.speed);
+    const humidity = Math.round(data.main.humidity);
+
     summaryValues[0].textContent = `${Math.round(rainAmount)}%`;
-    summaryValues[1].textContent = `${Math.round(data.wind.speed)} km/h`;
-    summaryValues[2].textContent = `${Math.round(data.main.humidity)}%`;
+    summaryValues[1].textContent = `${windSpeed} km/h`;
+    summaryValues[2].textContent = `${humidity}%`;
   }
 
   const humidityValue = document.getElementById("humidity-value");
@@ -306,6 +335,31 @@ function getWeatherIcon(weatherMain) {
   return iconMap[weatherMain] || "icons/sun.png";
 }
 
+function getWeatherEmoji(weatherMain) {
+  const emojiMap = {
+    Clear: "☀️",
+    Sunny: "☀️",
+    Clouds: "☁️",
+    Cloudy: "⛅",
+    Overcast: "☁️",
+    Rain: "🌧️",
+    Drizzle: "🌧️",
+    Thunderstorm: "⛈️",
+    Thunder: "⛈️",
+    Snow: "❄️",
+    Mist: "🌫️",
+    Smoke: "🌫️",
+    Haze: "🌫️",
+    Dust: "🌫️",
+    Fog: "🌫️",
+    Sand: "🌫️",
+    Ash: "🌫️",
+    Squall: "⛈️",
+    Tornado: "⛈️",
+  };
+  return emojiMap[weatherMain] || "☀️";
+}
+
 async function fetchAndDisplayForecast(lat, lon) {
   try {
     const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
@@ -396,18 +450,15 @@ async function fetchAndDisplayForecast(lat, lon) {
       }
     });
 
-    // Update hourly forecast for today
-    const todayKey = new Date(new Date().getTime() + timezoneOffset)
-      .toISOString()
-      .slice(0, 10);
-    const todayHourlyEntries = forecastData.list
-      .filter((entry) => {
-        const entryDate = new Date(entry.dt * 1000 + timezoneOffset)
-          .toISOString()
-          .slice(0, 10);
-        return entryDate === todayKey;
-      })
-      .sort((a, b) => a.dt - b.dt)
+    // Update hourly forecast with the next 7 future forecast points
+    const nowLocal = new Date(Date.now() + timezoneOffset);
+    const hourlyEntries = forecastData.list
+      .map((entry) => ({
+        entry,
+        localDate: new Date(entry.dt * 1000 + timezoneOffset),
+      }))
+      .filter(({ localDate }) => localDate >= nowLocal)
+      .sort((a, b) => a.entry.dt - b.entry.dt)
       .slice(0, 7);
 
     const hourlyForecastRow = document.querySelector("#hourly-forecast");
@@ -416,14 +467,15 @@ async function fetchAndDisplayForecast(lat, lon) {
 
       for (let i = 0; i < hourlyCards.length; i++) {
         const card = hourlyCards[i];
-        const entry = todayHourlyEntries[i];
-        if (!entry) break;
+        const item = hourlyEntries[i];
+        if (!item) break;
 
+        const entry = item.entry;
         const timeLabel = card.querySelector("div:first-child");
         const tempEl = card.querySelector(".forecast-temp");
         const lowEl = card.querySelector(".forecast-low");
 
-        const entryTime = new Date(entry.dt * 1000 + timezoneOffset);
+        const entryTime = item.localDate;
         const hourString = entryTime.toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
