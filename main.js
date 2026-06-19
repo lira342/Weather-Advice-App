@@ -132,8 +132,18 @@ function displayWeatherinfo(data) {
     tempElem.textContent = `${Math.round(data.main.temp)}°C`;
   }
 
-  updateAdvice(data.main.temp);
+  // Update temperature on today.html
+  const weatherTempLarge = document.querySelector(".weather-temp-large");
+  if (weatherTempLarge) {
+    weatherTempLarge.textContent = `${Math.round(data.main.temp)}°C`;
+  }
 
+  const feelsLike = document.querySelector(".feels-like");
+  if (feelsLike) {
+    feelsLike.textContent = `Feels like ${Math.round(data.main.feels_like)}°C`;
+  }
+
+  updateAdvice(data.main.temp);
 
   if (data.coord && data.coord.lat != null && data.coord.lon != null) {
     fetchAndDisplayForecast(data.coord.lat, data.coord.lon);
@@ -248,7 +258,6 @@ function displayWeatherinfo(data) {
             : "Low";
   }
 
-
   const sunriseElem = document.getElementById("sunrise-value");
   const sunsetElem = document.getElementById("sunset-value");
   if (sunriseElem || sunsetElem) {
@@ -307,7 +316,6 @@ async function fetchAndDisplayForecast(lat, lon) {
 
     const timezoneOffset = (forecastData.city.timezone || 0) * 1000;
 
-   
     const daysMap = new Map();
     forecastData.list.forEach((entry) => {
       const localDate = new Date(entry.dt * 1000 + timezoneOffset);
@@ -341,9 +349,12 @@ async function fetchAndDisplayForecast(lat, lon) {
 
         return {
           date: dateKey,
-          dayName: new Date(dateKey + "T00:00:00").toLocaleDateString(undefined, {
-            weekday: "short",
-          }),
+          dayName: new Date(dateKey + "T00:00:00").toLocaleDateString(
+            undefined,
+            {
+              weekday: "short",
+            },
+          ),
           max: tempMax,
           min: tempMin,
           main: weatherMain,
@@ -384,6 +395,45 @@ async function fetchAndDisplayForecast(lat, lon) {
         if (iconEl) iconEl.textContent = emojiMap[day.main] || "☀️";
       }
     });
+
+    // Update hourly forecast for today
+    const todayKey = new Date(new Date().getTime() + timezoneOffset)
+      .toISOString()
+      .slice(0, 10);
+    const todayHourlyEntries = forecastData.list
+      .filter((entry) => {
+        const entryDate = new Date(entry.dt * 1000 + timezoneOffset)
+          .toISOString()
+          .slice(0, 10);
+        return entryDate === todayKey;
+      })
+      .sort((a, b) => a.dt - b.dt)
+      .slice(0, 7);
+
+    const hourlyForecastRow = document.querySelector("#hourly-forecast");
+    if (hourlyForecastRow) {
+      const hourlyCards = hourlyForecastRow.querySelectorAll(".forecast-card");
+
+      for (let i = 0; i < hourlyCards.length; i++) {
+        const card = hourlyCards[i];
+        const entry = todayHourlyEntries[i];
+        if (!entry) break;
+
+        const timeLabel = card.querySelector("div:first-child");
+        const tempEl = card.querySelector(".forecast-temp");
+        const lowEl = card.querySelector(".forecast-low");
+
+        const entryTime = new Date(entry.dt * 1000 + timezoneOffset);
+        const hourString = entryTime.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+        if (timeLabel) timeLabel.textContent = hourString;
+        if (tempEl) tempEl.textContent = `${Math.round(entry.main.temp)}°C`;
+        if (lowEl) lowEl.textContent = `${Math.round(entry.main.feels_like)}°C`;
+      }
+    }
   } catch (err) {
     console.error("Forecast fetch error", err);
   }

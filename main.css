@@ -133,16 +133,39 @@ body {
 
 .summary-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 16px 18px;
+  gap: 12px;
+  padding: 18px 16px;
   background: #f7f9fd;
   border-radius: 18px;
   font-size: 15px;
   color: #3d4a72;
 }
 
-.summary-item strong {
+.summary-icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: #e8eefb;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.summary-label {
+  font-size: 12px;
+  color: #5b699f;
+}
+
+.summary-value {
+  font-size: 16px;
   font-weight: 700;
   color: #1f3a73;
 }
@@ -338,12 +361,14 @@ body {
 }
 
 .info-box:nth-child(2),
-.info-box:nth-child(3) {
+.info-box:nth-child(3),
+.info-box:nth-child(4),
+.info-box:nth-child(5),
+.info-box:nth-child(6) {
   border-top: 1px solid #dbe2f1;
 }
 
-.info-box:nth-child(1),
-.info-box:nth-child(2) {
+.info-box:nth-child(odd) {
   border-right: 1px solid #dbe2f1;
 }
 
